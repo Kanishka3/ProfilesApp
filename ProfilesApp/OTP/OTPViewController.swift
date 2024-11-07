@@ -17,6 +17,7 @@ class OTPViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createViews()
+        addTapGestureToDismissKeyboard()
     }
     
     
@@ -51,6 +52,16 @@ class OTPViewController: UIViewController {
         otpView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -GlobalConstants.phoneWidth * 0.3).isActive = true
         otpView.topAnchor.constraint(equalTo: view.topAnchor, constant: GlobalConstants.phoneHeight * 0.3).isActive = true
 
+    }
+    
+    func addTapGestureToDismissKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTapGesture() {
+        view.endEditing(true)
     }
 
 }
