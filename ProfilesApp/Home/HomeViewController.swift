@@ -109,11 +109,8 @@ class HomeViewController: UIViewController,
 extension HomeViewController {
     private func setCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [weak self] index, _ in
-            
-//            return NSCollectionLayoutSection.default
-            
-            
-            guard let self, let cellType = viewModel.dataSource[safe: index]  else { return NSCollectionLayoutSection.default }
+            guard let self,
+                  let cellType = viewModel.dataSource[safe: index] else { return NSCollectionLayoutSection.default }
             
             if case .gridImage(profile: _) = cellType.first {
                 
@@ -132,117 +129,7 @@ extension HomeViewController {
                 return NSCollectionLayoutSection(group: group)
             }
             return NSCollectionLayoutSection.default
-//            switch cellType {
-//            case .image(profile: _):
-//                let item = NSCollectionLayoutItem(
-//                    layoutSize: .init(
-//                        widthDimension: .fractionalWidth(1),
-//                        heightDimension: .fractionalWidth(1)
-//                    )
-//                )
-//                item.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
-//                
-//                let groupSize = NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .fractionalWidth(1)
-//                )
-//                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//                let section = NSCollectionLayoutSection(group: group)
-                
-//                return section
-//            default:
-//                let item = NSCollectionLayoutItem(
-//                    layoutSize: .init(
-//                        widthDimension: .fractionalWidth(1),
-//                        heightDimension: .estimated(100)
-//                    )
-//                )
-//                item.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
-//                
-//                let groupSize = NSCollectionLayoutSize(
-//                    widthDimension: .fractionalWidth(1),
-//                    heightDimension: .estimated(100)
-//                )
-//                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//                let section = NSCollectionLayoutSection(group: group)
-//                
-//                return section
-//            }
         }
     }
     
-}
-
-final class FallbackBlankCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "FallbackBlankCollectionViewCell"
-}
-
-extension UICollectionView {
-    func blankCell(forIndexPath: IndexPath) -> UICollectionViewCell {
-        register(
-            FallbackBlankCollectionViewCell.self,
-            forCellWithReuseIdentifier: FallbackBlankCollectionViewCell.reuseIdentifier
-        )
-        return dequeueReusableCell(
-            withReuseIdentifier: FallbackBlankCollectionViewCell.reuseIdentifier,
-            for: forIndexPath
-        )
-    }
-}
-
-extension NSCollectionLayoutSection {
-    static var `default`: NSCollectionLayoutSection {
-        
-        let item = NSCollectionLayoutItem(
-            layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(100)
-            )
-        )
-        
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
-        
-//        let item = NSCollectionLayoutItem(
-//            layoutSize: .init(
-//                widthDimension: .fractionalWidth(1),
-//                heightDimension: .fractionalWidth(1)
-//            )
-//        )
-//        item.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
-//        
-//        let groupSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .fractionalWidth(1)
-//        )
-//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//        return NSCollectionLayoutSection(group: group)
-    }
-}
-
-
-
-public extension MutableCollection {
-    /// Safely getting the array items
-    subscript (safe index: Index) -> Element? {
-        get {
-            guard index >= startIndex, index < endIndex else {
-                return nil
-            }
-            
-            return self[index]
-        }
-        
-        mutating set(newValue) {
-            if let newValue = newValue, index >= startIndex, index < endIndex {
-                self[index] = newValue
-            }
-        }
-    }
 }
